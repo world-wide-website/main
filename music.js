@@ -7,7 +7,7 @@ const songs = [
   'DAKU',
   'Kindess',
   'Old-Town-Road-x-No-Love',
-  'First Class',
+  'First-Class',
   'ANIMAL'
 ];
 
