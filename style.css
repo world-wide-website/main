@@ -15,15 +15,16 @@ body {
   margin: 0;
 }
 
-.music-container {
-  background-color: #000000;
-  border-radius: 15px;
-  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.6);
-  display: flex;
-  padding: 10px 30px;
-  position: relative;
-  margin: 100px 0;
-  z-index: 10;
+.music-container {margin-top: 85vh;
+    background-color: #000000;
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.6);
+    display: flex;
+    padding: 10px 30px;
+    position: fixed;
+    margin-bottom: 0;
+    z-index: 10;
+    width: 100vw;
+    margin-bottom: 0;
 }
 
 .img-container {
@@ -31,18 +32,18 @@ body {
   width: 130px;
 }
 
-.img-container::after {
-  content: '';
-  border: #ffffff solid 4px;
-  padding: 10px;
-  background-color: #171414;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  transform: translate(-50%, 50%);
+.img-container::after {ontent: '';
+    border: #ffffff solid 4px;
+    /* padding: 10px; */
+    background-color: #171414;
+    border-radius: 50%;
+    position: absolute;
+    /* top: 26%; */
+    bottom: 120%;
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    transform: translate(-50%, 50%);
 }
 
 .img-container img {
