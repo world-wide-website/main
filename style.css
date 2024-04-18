@@ -6,7 +6,7 @@
 
 body {
   background-image:rgb(127, 29, 29);
-  height: 100dvh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
