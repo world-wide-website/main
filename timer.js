@@ -1,5 +1,4 @@
-const CountingTimerTime = document.createElement('span');
-  document.body.appendChild(CountingTimerTime);
+const CountingTimerTime = document.getElementsByClassName("boxoffice");
 
 const startDate = new Date('1024-05-13T09:00:00');
   function updateTimer() {
