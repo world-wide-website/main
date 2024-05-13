@@ -1,4 +1,4 @@
-const CountingTimerTime = document.getElementsByClassName("boxoffice");
+const CountingsTimerTime = document.getElementsByClassName("boxoffice");
 
 const startDate = new Date('1024-05-13T09:00:00');
   function updateTimer() {
@@ -13,7 +13,7 @@ const startDate = new Date('1024-05-13T09:00:00');
     const minutes = Math.floor((timeDifference % (60 * 60 * 1000)) / (60 * 1000));
     const seconds = Math.floor((timeDifference % (60 * 1000)) / 1000);
 
-    CountingTimerTime.textContent = `${centuries}C ${years}Y ${months}M ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    CountingsTimerTime.textContent = `${centuries}C ${years}Y ${months}M ${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
   
   setInterval(updateTimer, 1000)
