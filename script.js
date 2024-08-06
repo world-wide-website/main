@@ -1,5 +1,5 @@
 const main = document.createElement("script");
-      myapp.src = "main.js";
+      main.src = "main.js";
 document.body.appendChild(main);
 
 const audios = document.createElement("script");
