@@ -1,8 +1,8 @@
 let allMusic = [
    {
-    name: "Kanmani Anbodu",
+    name: "Kanmani Anbodu Tami",
     artist: "Tamil",
-    img: "Kanmani Anbodu",
+    img: "Kanmani",
     src: "Kanmani Anbodu"
   },
    {
