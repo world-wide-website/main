@@ -1,4 +1,16 @@
 let allMusic = [
+   {
+    name: "Kanmani Anbodu",
+    artist: "Tamil",
+    img: "Kanmani Anbodu",
+    src: "Kanmani Anbodu"
+  },
+   {
+    name: "Shape Of You Remix Slowmo",
+    artist: "English",
+    img: "Shape Of You",
+    src: "Shape Of You Remix Slowmo"
+  },
   {
     name: "Harley Bird - Home",
     artist: "Jordan Schor",
