@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resources = [
         { type: "link", rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" },
         { type: "link", rel: "stylesheet", href: "https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" },
-        { type: "link", rel: "stylesheet", href: "style.css" },
+        { type: "link", rel: "stylesheet", href: "../style.css" },
         { type: "script", src: "videos.js", defer: true },
         { type: "script", src: "audios.js", defer: true },
     ];
