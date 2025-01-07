@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { type: "link", rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" },
         { type: "link", rel: "stylesheet", href: "https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" },
         { type: "link", rel: "stylesheet", href: "style.css" },
-        { type: "script", src: "script/videos.js", defer: true },
-        { type: "script", src: "script/audios.js", defer: true },
+        { type: "script", src: "videos.js", defer: true },
+        { type: "script", src: "audios.js", defer: true },
     ];
     resources.forEach(({ type, rel, href, src, defer }) => {
         let element;
