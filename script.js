@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const resources = [
         { type: "link", rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" },
         { type: "link", rel: "stylesheet", href: "https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" },
-        { type: "link", rel: "stylesheet", href: "../style.css" },
-        { type: "script", src: "videos.js", defer: true },
-        { type: "script", src: "audios.js", defer: true },
+        { type: "link", rel: "stylesheet", href: "style.css" },
+        { type: "script", src: "script/videos.js", defer: true },
+        { type: "script", src: "script/audios.js", defer: true },
     ];
     resources.forEach(({ type, rel, href, src, defer }) => {
         let element;
@@ -163,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const asider = fastTag('div', Root, 'asider');
         const container = fastTag('div', Root, 'container');
         const web = [
-            { pages: 'Home', icon: 'home', colors: 'red' },
-            { pages: 'Videos', icon: 'subscriptions', colors: 'green' },
-            { pages: 'Add', icon: 'add_circle', colors: 'yellow' },
+            { pages: 'Home', icon: 'home', colors: 'gray' },
+            { pages: 'Videos', icon: 'subscriptions', colors: 'gray' },
+            { pages: 'Add', icon: 'add_circle', colors: 'gray' },
             { pages: 'Music', icon: 'music_note', colors: 'gray' },
-            { pages: 'Profile', icon: 'account_circle', colors: 'blue' }
+            { pages: 'Profile', icon: 'account_circle', colors: 'gray' }
         ];
         web.forEach(({ pages, colors, icon }) => {
             const aside = fastTag('div', asider, 'asider-item');
@@ -192,6 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             asiderElems.forEach((f, i) => f.addEventListener('click', () => updateSlide(counter = i + 1)));
             updateSlide(counter);
-        }, 1000);
-        });
-        
+        },
+    1000);
+});
