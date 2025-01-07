@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
+
     window.fastTag = (tag, parent, className, id, text) => {
         const element = document.createElement(tag);
         if (className) element.className = className;
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { type: "script", src: "videos.js", defer: true },
         { type: "script", src: "audios.js", defer: true },
     ];
+
     resources.forEach(({ type, rel, href, src, defer }) => {
         let element;
         if (type === "link") { element = document.createElement("link"); element.rel = rel; element.href = href; }
@@ -24,41 +25,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const path = '../';
-    const loadMediaItems = (items, content, stopAllMedia, fastTag, mediaType) => {
+    let currentPlayingVideo = null;
+    let currentPlayingAudio = null;
+
+    const stopAllMedia = () => {
+        if (currentPlayingVideo) { currentPlayingVideo.pause(); currentPlayingVideo = null; }
+        if (currentPlayingAudio) { currentPlayingAudio.pause(); currentPlayingAudio = null; }
+    };
+
+    const formatDuration = (duration) => {
+        const Time = (n) => n.toString().padStart(2, '0');
+        let durationText = '';
+        if (duration < 60) {
+            durationText = `00:${Time(Math.floor(duration))}`;
+        } else if (duration < 3600) {
+            const minutes = Time(Math.floor(duration / 60));
+            const seconds = Time(Math.floor(duration % 60));
+            durationText = `${minutes}:${seconds}`;
+        } else if (duration < 86400) {
+            const hours = Time(Math.floor(duration / 3600));
+            const minutes = Time(Math.floor((duration % 3600) / 60));
+            const seconds = Time(Math.floor(duration % 60));
+            durationText = `${hours}:${minutes}:${seconds}`;
+        } else {
+            const days = Math.floor(duration / 86400);
+            const hours = Time(Math.floor((duration % 86400) / 3600));
+            const minutes = Time(Math.floor((duration % 3600) / 60));
+            const seconds = Time(Math.floor(duration % 60));
+            durationText = `${days}d ${hours}:${minutes}:${seconds}`;
+        }
+        return durationText;
+    };
+
+    const handleMediaItems = (items, content, mediaType) => {
         const mainContainer = fastTag('div', content, 'main', '');
         const mainMedia = fastTag(mediaType, mainContainer, 'main-media', `main-${mediaType}`, '');
         const mainControl = fastTag('div', mainContainer, 'mainControl', '');
         const titleTime = fastTag('div', mainControl, 'titleTime', '');
-        const Maintitle = fastTag('span', titleTime, 'Maintitle', '', ''); // Placeholder for main title
+        const Maintitle = fastTag('span', titleTime, 'Maintitle', '', '');
         const currentTimeSpan = fastTag('span', titleTime, 'time-span', 'currentTime', '00:00:00');
         const totalTimeSpan = fastTag('span', titleTime, 'time-span', 'totalTime', '00:00:00');
         const list = fastTag('div', content, 'list', '', '');
         mainContainer.style.display = 'none';
         mainMedia.controls = true;
         let currentlyPlayingItem = null;
-        const Time = (n) => n.toString().padStart(2, '0');
-        const formatDuration = (duration) => {
-            let durationText = '';
-            if (duration < 60) {
-                durationText = `00:${Time(Math.floor(duration))}`;
-            } else if (duration < 3600) {
-                const minutes = Time(Math.floor(duration / 60));
-                const seconds = Time(Math.floor(duration % 60));
-                durationText = `${minutes}:${seconds}`;
-            } else if (duration < 86400) {
-                const hours = Time(Math.floor(duration / 3600));
-                const minutes = Time(Math.floor((duration % 3600) / 60));
-                const seconds = Time(Math.floor(duration % 60));
-                durationText = `${hours}:${minutes}:${seconds}`;
-            } else {
-                const days = Math.floor(duration / 86400);
-                const hours = Time(Math.floor((duration % 86400) / 3600));
-                const minutes = Time(Math.floor((duration % 3600) / 60));
-                const seconds = Time(Math.floor(duration % 60));
-                durationText = `${days}d ${hours}:${minutes}:${seconds}`;
-            }
-            return durationText;
-        };
 
         items.forEach(({ Type, Title, subTitle, Src, Img, imgType, Tags }) => {
             const mediaList = fastTag('div', list, 'list-item', '', '');
@@ -101,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const sourceDiv = fastTag('div', mediaList, 'source', '', '');
             const imgElement = fastTag('img', sourceDiv, '', '', '');
             const tempMedia = document.createElement(mediaType);
-            imgElement.src = `${path}Images/${Img}.${imgType}`;
-            tempMedia.src = mediaType === 'audio' ? `${path}Audio/${Src}.${Type}` : `${path}Video/${Src}.${Type}`;
+            imgElement.src = `${path}images/${Img}.${imgType}`;
+            tempMedia.src = mediaType === 'audio' ? `${path}song/${Src}.${Type}` : `${path}Video/${Src}.${Type}`;
             tempMedia.addEventListener('loadedmetadata', () => {
                 const duration = tempMedia.duration;
                 const durationText = formatDuration(duration);
@@ -113,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const listTitle = fastTag('h3', Titles, 'listTitle', '', Title);
             const listsubTitle = fastTag('p', Titles, 'listsubTitle', '', subTitle);
 
-            // Adding hashtag logic
             const hashTagsSpan = fastTag('span', Titles, 'hashTagsSpan', '');
             Tags.forEach((cat, index) => {
                 if (index < 2) {
@@ -139,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-
         });
 
         mainMedia.addEventListener('timeupdate', () => {
@@ -149,16 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    let currentPlayingVideo = null;
-    let currentPlayingAudio = null;
-    const stopAllMedia = () => {
-        if (currentPlayingVideo) { currentPlayingVideo.pause(); currentPlayingVideo = null; }
-        if (currentPlayingAudio) { currentPlayingAudio.pause(); currentPlayingAudio = null; }
-    };
-
     setTimeout(() => {
-        console.log('Videos:', Videos);
-        console.log('Audios:', Audios);
         const Root = fastTag('div', document.body, 'Root');
         const asider = fastTag('div', Root, 'asider');
         const container = fastTag('div', Root, 'container');
@@ -173,25 +172,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const aside = fastTag('div', asider, 'asider-item');
             fastTag('span', aside, 'material-symbols-outlined', null, icon);
             fastTag('h2', aside, null, null, pages);
-                const page = fastTag('div', container, 'page');
-                const content = fastTag('div', page, 'content');
-                page.style.backgroundColor = colors;
-                if (pages === 'Videos') { loadMediaItems(Videos, content, stopAllMedia, fastTag, 'video'); }
-                if (pages === 'Music') { loadMediaItems(Audios, content, stopAllMedia, fastTag, 'audio'); }
-            });
-            let counter = 2;
-            const pageElems = document.querySelectorAll('.page');
-            const asiderElems = document.querySelectorAll('.asider-item');
-            const updateSlide = (n) => {
-                if (n > pageElems.length) counter = 1;
-                if (n < 1) counter = pageElems.length;
-                pageElems.forEach(p => p.style.display = 'none');
-                asiderElems.forEach(f => f.classList.remove('active'));
-                pageElems[counter - 1].style.display = 'block';
-                asiderElems[counter - 1].classList.add('active');
-            };
-            asiderElems.forEach((f, i) => f.addEventListener('click', () => updateSlide(counter = i + 1)));
-            updateSlide(counter);
-        },
-    1000);
+            const page = fastTag('div', container, 'page');
+            const content = fastTag('div', page, 'content');
+            page.style.backgroundColor = colors;
+            if (pages === 'Videos') { handleMediaItems(Videos, content, 'video'); }
+            if (pages === 'Music') { handleMediaItems(Audios, content, 'audio'); }
+        });
+        
+        let counter = 2;
+        const pageElems = document.querySelectorAll('.page');
+        const asiderElems = document.querySelectorAll('.asider-item');
+        const updateSlide = (n) => {
+            if (n > pageElems.length) counter = 1;
+            if (n < 1) counter = pageElems.length;
+            pageElems.forEach(p => p.style.display = 'none');
+            asiderElems.forEach(f => f.classList.remove('active'));
+            pageElems[counter - 1].style.display = 'block';
+            asiderElems[counter - 1].classList.add('active');
+        };
+        
+        asiderElems.forEach((f, i) => f.addEventListener('click', () => updateSlide(counter = i + 1)));
+        updateSlide(counter);
+    }, 1000);
 });
